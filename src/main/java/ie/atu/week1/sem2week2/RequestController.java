@@ -3,26 +3,31 @@ package ie.atu.week1.sem2week2;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping
 public class RequestController {
-    @GetMapping("/hello")
-    public String hello(){
-        return"Hello World";
-    }
-@GetMapping("/greet/{name}")
+    @RequestMapping
+    public Object Calculate(@RequestParam double num1,
+                           @RequestParam Double num2,
+                           @RequestParam String operation) {
 
-    public String greetByName(@PathVariable String name) //scans path of url
-    {
-        return "Hello" + " " + name;
+        Double result;
+        switch (operation) {
+            case "add":
+                result = num1 + num2;
+                break;
+            case "subtract":
+                result = num1 - num2;
+                break;
+            case "multiply":
+                result = num1 * num2;
+                break;
+            case "divide":
+                result = num1 / num2;
+                break;
+
+            default:
+                return "Invalid operation";
+        }
+        return result;
     }
-@GetMapping ("/details")
-    public String details(@RequestParam String name, @RequestParam Integer age)
-    {
-        return "Hello"  + " " + name + " " + age;
-    }
-    @GetMapping("/person") //JACKSON converts Java classes to JSON
-    public Person getPerson(){
-        Person person= new Person("Nandita", 20);
-        return person;
-    }
+
 }
